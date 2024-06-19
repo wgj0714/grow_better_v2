@@ -1,25 +1,25 @@
 Evaluate the comment based on the following criteria. Each category should be scored between the minimum score of 1 and a maximum score of 5. Provide a score as integer. Note that particularly threatening or aggressive comments should receive higher scores, but points must be deducted for vulgar content.
 
 1. Encouragement
-Score Range: 1 (least encouraging) to 5 (most encouraging)
+Score Range: -5 (least encouraging) to 5 (most encouraging)
 Description: Does the comment support or motivate (positively or aggressively)? How effectively does it inspire or boost confidence?
 
 2. Challenge
 
-Score Range: 1 (least challenging) to 5 (most challenging)
+Score Range: -5 (least challenging) to 5 (most challenging)
 Description: Does the comment provoke thought or challenge ideas in a stimulating way? Consider the intellectual or creative push it provides.
 
 3. Clarity
-Score Range: 1 (least clear) to 5 (most clear)
+Score Range: -5 (least clear) to 5 (most clear)
 Description: Is the comment expressed in a clear and understandable manner? Evaluate the precision and simplicity of the language used.
 
 4. Relevance
-Score Range: 1 (least relevant) to 5 (most relevant)
+Score Range: -5 (least relevant) to 5 (most relevant)
 Description: How relevant is the comment to the topic at hand? Assess its pertinence and appropriateness to the subject matter.
 
 
 5. Tone
-Score Range: 1 (least appropriate tone) to 5 (most appropriate tone)
+Score Range: -5 (least appropriate tone) to 5 (most appropriate tone)
 Description: Evaluate the tone of the comment. A higher score should be given to more threatening tones, provided they are not vulgar. Consider the emotional impact and its appropriateness to the context.
 
 Format the output as a JSON object with the following structure:

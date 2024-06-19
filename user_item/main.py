@@ -5,17 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import SessionLocal
 import models, crud, schemas
 from rate_comments import CommentRater
-import rate_comments
-from dotenv import load_dotenv
-import os
-import uuid
 
-load_dotenv()
-
-OPEN_API_KEY = os.getenv('OPEN_API_KEY')
-
-with open("./prompt.txt", "r") as file:
-    prompt = file.read()
 
 app = FastAPI()
 
@@ -41,35 +31,27 @@ def get_db():
 def read_root():
     return {"message": "Welcome to the Plant Comment API"}
 
-@app.post("/users/{plant_id}/info")# response_model=schemas.Item)
-def create_plant_info(plant_info: schemas.PlantCreate, db: Session= Depends(get_db)):
-    return crud.create_plant(db=db, plant_info=plant_info, plant_id=str(uuid.uuid1()))
+@app.post("/users/{user_id}/info")# response_model=schemas.Item)
+def create_user_info(user_id: int, user_info: schemas.UserCreate, db: Session= Depends(get_db)):
+    return crud.create_user_info(db=db, user_info=user_info, user_id=user_id)
 
-# @app.post("/users/{comment_id}/items")# response_model=schemas.Item)
-# def create_comment_info(comment_id: int, comment_info: schemas.CommentCreate, db: Session= Depends(get_db)):
-#     return crud.create_comment(db=db, comment_info=comment_info, comment_id=comment_id)
+@app.post("/users/{user_id}/items")# response_model=schemas.Item)
+def create_item_for_user(user_id: int, item: schemas.ItemCreate, db: Session= Depends(get_db)):
+    return crud.create_user_item(db=db, item=item, user_id=user_id)
 
-@app.post("/users/update/{comment_id}")
-def update_plant_score(comment_info: schemas.CommentCreate, db: Session=Depends(get_db)):
-    comment, target_plant_name = crud.create_comment(db=db, comment_info = comment_info, 
-    comment_id=str(uuid.uuid1()))
-    rater = CommentRater(comment, prompt, OPEN_API_KEY)
-    result = rater.create_score()
-    crud.update_grow_stage(db=db, target_plant_name=target_plant_name, mean_score=result)
-    return "sucessful_making_comment_and_update_score"
+@app.get("/users/{user_id}")
+def get_users(db:Session=Depends(get_db)):
+    return crud.get_user(db=db)
 
-@app.get("/users/all_plants")
-def get_all_plants(db:Session=Depends(get_db)):
-    return crud.get_plant(db=db)
+@app.get("/users/{user_email}")
+def get_user_from_email(user_email: str, db:Session=Depends(get_db)):
+    return crud.get_user_by_email(db=db, email=user_email)
 
-@app.get("/users/get/{target_plant_name}")
-def get_comment_by_plant_name(target_plant_name: str, db:Session=Depends(get_db)):
-    return crud.get_comment_by_name(target_plant_name=target_plant_name, db=db)
-
-@app.delete("/users/delete/{plant_name}")
-def delete_plant(plant_name: str, db:Session=Depends(get_db)):
-    crud.delete_with_name(db=db, plant_name=plant_name)
+@app.delete("/users/delete/{user_id}")
+def delete_user(user_id: int, db:Session=Depends(get_db)):
+    crud.delete_with_id(db=db, user_id=user_id)
     return "sucessful_delete"
+
 
 # @app.post("/plants/", response_model=schemas.PlantCreate)
 # def create_plant(plant: schemas.PlantCreate, db: Session = Depends(get_db)):
