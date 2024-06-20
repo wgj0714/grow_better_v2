@@ -9,9 +9,11 @@ def get_plant(db: Session):
     return db.query(models.Plant).all()
 
 def get_comment_by_name(db: Session, target_plant_name: str):
-     return db.query(models.Comment).filter_by(target_plant_name=target_plant_name).all()
-      
+    return db.query(models.Comment).filter_by(target_plant_name=target_plant_name).all()
 
+def get_plants_by_grow_stage(db: Session, grow_stage: str):
+    return db.query(models.Plant).filter_by(grow_stage=grow_stage).all()
+      
 # create plant, comment db
 def create_plant(db: Session, plant_id: str, plant_info: schemas.PlantCreate):
     db_plant = models.Plant(**plant_info.model_dump(), plant_id = str(uuid.uuid1()))

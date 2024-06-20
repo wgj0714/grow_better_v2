@@ -71,6 +71,10 @@ def delete_plant(plant_name: str, db:Session=Depends(get_db)):
     crud.delete_with_name(db=db, plant_name=plant_name)
     return "sucessful_delete"
 
+@app.get("/users/get/{grow_stage}")
+def get_grow_stage(grow_stage: str, db:Session=Depends(get_db)):
+    return crud.get_plants_by_grow_stage(db=db, grow_stage=grow_stage)
+
 # @app.post("/plants/", response_model=schemas.PlantCreate)
 # def create_plant(plant: schemas.PlantCreate, db: Session = Depends(get_db)):
 #     pass
