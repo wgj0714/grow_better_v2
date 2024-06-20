@@ -62,7 +62,7 @@ def update_plant_score(comment_info: schemas.CommentCreate, db: Session=Depends(
 def get_all_plants(db:Session=Depends(get_db)):
     return crud.get_plant(db=db)
 
-@app.get("/users/get/{target_plant_name}")
+@app.get("/users/target_plant_name/{target_plant_name}")
 def get_comment_by_plant_name(target_plant_name: str, db:Session=Depends(get_db)):
     return crud.get_comment_by_name(target_plant_name=target_plant_name, db=db)
 
@@ -71,7 +71,7 @@ def delete_plant(plant_name: str, db:Session=Depends(get_db)):
     crud.delete_with_name(db=db, plant_name=plant_name)
     return "sucessful_delete"
 
-@app.get("/users/get/{grow_stage}")
+@app.get("/users/grow_stage/{grow_stage}")
 def get_grow_stage(grow_stage: str, db:Session=Depends(get_db)):
     return crud.get_plants_by_grow_stage(db=db, grow_stage=grow_stage)
 

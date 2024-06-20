@@ -12,6 +12,7 @@ def get_comment_by_name(db: Session, target_plant_name: str):
     return db.query(models.Comment).filter_by(target_plant_name=target_plant_name).all()
 
 def get_plants_by_grow_stage(db: Session, grow_stage: str):
+    print(grow_stage)
     return db.query(models.Plant).filter_by(grow_stage=grow_stage).all()
       
 # create plant, comment db
